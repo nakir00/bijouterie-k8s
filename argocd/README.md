@@ -1,12 +1,12 @@
 # Installation d'Argo CD avec Kubernetes
 
-Le manifeste officiel Argo CD v3.6.1 est enregistré dans `k8s/00-installation/02-argocd/01-install.yaml`. La version est fixée pour rendre l'installation reproductible. Prérequis : `kubectl`, droits d'administration et accès Internet aux images.
+Le manifeste officiel Argo CD v3.6.1 est chargé directement depuis GitHub par `kubectl`. La version est fixée pour rendre l’installation reproductible. Prérequis : `kubectl`, droits d’administration et accès Internet au manifeste et aux images.
 
 Sur un cluster vierge, depuis la racine du dépôt :
 
 ```sh
 kubectl apply -f k8s/00-installation/02-argocd/00-namespace.yaml
-kubectl apply -n argocd --server-side --force-conflicts -f k8s/00-installation/02-argocd/01-install.yaml
+kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/v3.6.1/manifests/install.yaml
 kubectl -n argocd rollout status deployment/argocd-server
 kubectl -n argocd port-forward svc/argocd-server 8082:443
 ```
