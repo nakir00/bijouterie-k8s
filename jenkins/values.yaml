@@ -1,8 +1,0 @@
-# Valeurs du chart officiel Jenkins : le service reste interne au cluster.
-controller:
-  serviceType: ClusterIP
-
-# Une StorageClass dynamique par défaut est nécessaire pour ce PVC.
-persistence:
-  enabled: true
-  size: 10Gi

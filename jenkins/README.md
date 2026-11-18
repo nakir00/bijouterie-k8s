@@ -1,16 +1,18 @@
-# Installation de Jenkins
+# Installation de Jenkins avec Kubernetes
 
-Le script utilise le chart officiel Jenkins version 5.13.3. Il installe le contrôleur dans le namespace `jenkins` et demande un volume persistant de 10 Gio.
+Les manifests adaptés de [scriptcamp/kubernetes-jenkins](https://github.com/scriptcamp/kubernetes-jenkins/tree/0c3fba187adbc96c78d9c1dc60e11cdd176ca45b) se trouvent dans `k8s/00-installation/01-jenkins/` : namespace, compte de service, stockage, Deployment et Service. Contrairement à l'exemple, le PVC utilise la StorageClass par défaut et le compte de service ne reçoit pas de rôle administrateur.
 
-Prérequis : `kubectl` configuré sur le bon cluster, des droits d'administration, Helm 3, un accès Internet et une StorageClass par défaut capable de provisionner un volume. Depuis la racine du dépôt :
+Prérequis : `kubectl` configuré sur le bon cluster, droits de création des ressources, accès aux images et StorageClass par défaut. Sur un cluster vierge, depuis la racine du dépôt :
 
 ```sh
-./jenkins/install.sh
-kubectl -n jenkins port-forward svc/jenkins 8081:8080
+kubectl apply -f k8s/00-installation/01-jenkins/00-namespace.yaml
+kubectl apply -f k8s/00-installation/01-jenkins/
+kubectl -n devops-tools rollout status deployment/jenkins
+kubectl -n devops-tools get pods,svc,pvc
 ```
 
-Ouvrir ensuite http://localhost:8081. Pour accéder au compte administrateur initial, consulter localement les instructions affichées par `helm get notes jenkins -n jenkins`, sans partager le mot de passe ni le montrer dans une capture.
+Accès : `http://<adresse-du-noeud>:32000` ; sur Docker Desktop, http://localhost:32000. Pour le mot de passe initial, consulter localement le fichier `/var/jenkins_home/secrets/initialAdminPassword` dans le conteneur Jenkins, sans l'afficher dans une capture ni le partager.
 
-Le script s'arrête si le namespace `jenkins` existe déjà ; il ne met pas à niveau une installation existante. Un PVC `Pending` indique un problème de stockage. L'installation ne configure ni le pipeline ni ses credentials. Il faut encore configurer l'agent de build et les accès à Docker Hub et au dépôt Git privé.
+Un PVC `Pending` indique un problème de stockage. Le contrôleur ne dispose pas d'un moteur Docker : l'agent de build, ses droits éventuels, le pipeline et les credentials restent à configurer.
 
-Documentation officielle : https://www.jenkins.io/doc/book/installing/kubernetes/
+Ne pas appliquer ces fichiers par-dessus une installation Jenkins existante sans examiner les différences : le Deployment, son compte de service et son PVC pourraient être modifiés.

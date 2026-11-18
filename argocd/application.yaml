@@ -10,6 +10,9 @@ spec:
     repoURL: https://github.com/nakir00/bijouterie-k8s.git
     targetRevision: main
     path: k8s
+    # Les manifests d’installation dans 00-installation/ restent hors synchronisation.
+    directory:
+      recurse: false
   destination:
     server: https://kubernetes.default.svc
     namespace: bijouterie

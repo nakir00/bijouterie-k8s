@@ -87,9 +87,9 @@ curl -F nom="Bague Test" -F categorie=bague -F carat=18 -F poids_g=3.5 \
 
 # Bijouterie : infrastructure Kubernetes
 
-- `k8s/` : manifests de l'application surveillés par Argo CD.
-- `jenkins/` : installation et configuration de Jenkins.
-- `argocd/install.sh` : installation d’Argo CD sur un nouveau cluster.
+- `k8s/` : manifests de l’application surveillés par Argo CD ; le sous-dossier `00-installation/` contient les manifests d’installation des outils.
+- `jenkins/` : instructions pour installer Jenkins avec les manifests Kubernetes.
+- `argocd/` : instructions d’installation d’Argo CD et définition de l’Application.
 - `argocd/application.yaml` : Application Argo CD déclarative.
 
 Les trois services et leurs Dockerfiles se trouvent dans `frontend/`, `backend/` et `database/` à la racine de ce dépôt. Voir [jenkins/README.md](jenkins/README.md) et [argocd/README.md](argocd/README.md) pour l’installation et les prérequis.
