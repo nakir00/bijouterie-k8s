@@ -53,7 +53,7 @@ Ouvrir https://localhost:8082 et suivre [argocd/README.md](argocd/README.md) pou
 
 ## 4. Déployer Bijouterie avec Argo CD
 
-**Avant cette étape**, vérifier dans Docker Hub que les trois images et les tags indiqués dans les Deployments existent et sont publics, et que la connexion au dépôt privé est établie dans Argo CD. Les tags `:1` sont pour l'instant des valeurs provisoires ; la CI n'a pas encore publié les images.
+**Avant cette étape**, vérifier dans Docker Hub que les trois images et les tags indiqués dans les Deployments existent et sont publics, et que la connexion au dépôt privé est établie dans Argo CD. Les images `:1` ont été publiées manuellement ; la CI Jenkins reste à configurer pour produire les versions suivantes.
 
 Depuis un autre terminal, créer l'Application Argo CD :
 
