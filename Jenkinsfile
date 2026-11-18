@@ -1,6 +1,6 @@
 pipeline {
     // Le job doit s'exécuter sur un agent équipé de Docker et de Git.
-    agent { label 'docker' }
+    agent { label 'local' }
 
     options {
         // Empêche deux builds de se concurrencer sur le tag latest.

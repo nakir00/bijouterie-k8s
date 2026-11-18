@@ -48,7 +48,7 @@ Docker Desktop et son moteur doivent être démarrés. Dans **Administrer Jenkin
 
 - un exécuteur ;
 - un répertoire de travail absolu existant sur la machine hôte, par exemple `/Users/<utilisateur>/jenkins-agent` sur Mac ;
-- le label `docker` : il correspond au label du Jenkinsfile ;
+- le label `local` : il correspond au label du Jenkinsfile ;
 - la méthode de lancement où l'agent se connecte au contrôleur.
 
 Créer le répertoire choisi sur le Mac. Enregistrer le nœud, ouvrir sa page et suivre les instructions fournies par Jenkins pour télécharger son `agent.jar` et lancer l'agent. Si l'option WebSocket est proposée, elle permet d'utiliser le port HTTP Jenkins sans exposer un port agent TCP supplémentaire. Le secret propre au nœud doit rester privé ; ne pas le copier dans Git, dans une capture ou dans une conversation. La documentation Jenkins permet aussi de le lire depuis un fichier protégé avec l'option `-secret @chemin-du-fichier`.
@@ -65,6 +65,6 @@ Depuis l'accueil Jenkins :
 4. Indiquer la branche `*/main` et le chemin `Jenkinsfile`.
 5. Enregistrer, puis lancer un premier build.
 
-Le Jenkinsfile demande le label `docker` et prévoit les étapes Checkout, Build, Tag et Push. Il vérifie le dépôt périodiquement avec `pollSCM` toutes les cinq minutes environ. Chaque build utilise `build-<numéro>` et `latest` pour les trois images. Il ne modifie pas automatiquement les tags des manifests Kubernetes.
+Le Jenkinsfile demande le label `local` et prévoit les étapes Checkout, Build, Tag et Push. Il vérifie le dépôt périodiquement avec `pollSCM` toutes les cinq minutes environ. Chaque build utilise `build-<numéro>` et `latest` pour les trois images. Il ne modifie pas automatiquement les tags des manifests Kubernetes.
 
 Vérifier que les quatre étapes réussissent et que les trois dépôts publics Docker Hub affichent les nouveaux tags. Les manifests Kubernetes doivent utiliser un tag explicite, pas `latest`. Le premier build de bout en bout et la connexion de l'agent restent à valider sur notre installation.
