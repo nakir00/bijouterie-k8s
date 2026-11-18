@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: bijouterie
+  labels:
+    app: bijouterie
+    tier: backend
+# Les noms mysql et backend sont résolus par le DNS interne de Kubernetes.
+data:
+  PORT: "3000"
+  DB_HOST: mysql
+  DB_PORT: "3306"
+  DB_NAME: bijouterie
+  SHOP_NAME: Maison Aurore
+  CURRENCY: EUR
+  MAX_FILE_SIZE_MB: "5"
