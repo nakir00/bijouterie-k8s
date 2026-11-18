@@ -21,7 +21,7 @@ spec:
       containers:
         - name: frontend
           # Adapter le tag au numéro du build publié par Jenkins.
-          image: nabyyy/bijouterie-frontend:1
+          image: nabyyy/bijouterie-frontend:build-6
           ports:
             - name: http
               containerPort: 80
