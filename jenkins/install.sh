@@ -21,7 +21,7 @@ helm repo add jenkinsci https://charts.jenkins.io
 helm repo update jenkinsci
 helm install "$release" jenkinsci/jenkins --version "$chart_version" \
   --namespace "$namespace" --create-namespace \
-  --values "$script_dir/jenkins/values.yaml" --wait --timeout 10m
+  --values "$script_dir/values.yaml" --wait --timeout 10m
 printf '\nJenkins installé. Pour accéder à l’interface :\n'
 printf 'kubectl -n jenkins port-forward svc/jenkins 8081:8080\n'
-printf 'Suivre bootstrap/README.md pour la connexion et les credentials.\n'
+printf 'Suivre jenkins/README.md pour la connexion et les credentials.\n'

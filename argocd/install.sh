@@ -21,4 +21,4 @@ kubectl rollout status deployment/argocd-repo-server -n "$namespace" --timeout=1
 kubectl rollout status statefulset/argocd-application-controller -n "$namespace" --timeout=10m
 printf '\nArgo CD installé. Pour accéder à l’interface :\n'
 printf 'kubectl -n argocd port-forward svc/argocd-server 8082:443\n'
-printf 'Suivre bootstrap/README.md pour la connexion et les credentials.\n'
+printf 'Suivre argocd/README.md pour la connexion et les credentials.\n'
