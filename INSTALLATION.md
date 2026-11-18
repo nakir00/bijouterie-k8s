@@ -27,7 +27,7 @@ kubectl -n devops-tools get pods,svc,pvc
 
 Le PVC doit être `Bound` et le pod prêt. Jenkins est accessible sur `http://<adresse-du-noeud>:32000` ; sur Docker Desktop : http://localhost:32000. Voir [jenkins/README.md](jenkins/README.md) pour la première connexion.
 
-**À configurer avant de lancer une CI :** le job et son Jenkinsfile, un agent capable de construire les images, les credentials Docker Hub et GitHub et leur accès aux dépôts. Ces éléments ne sont pas encore automatisés ou finalisés dans ce dépôt. Ne pas afficher les mots de passe ou tokens dans les captures ni les enregistrer dans Git.
+**À configurer avant de lancer une CI :** le job utilisant le `Jenkinsfile` à la racine, un agent portant le label `docker` capable de construire les images, les credentials Docker Hub et GitHub et leur accès aux dépôts. Le pipeline est fourni mais ces éléments et sa validation restent à finaliser. Ne pas afficher les mots de passe ou tokens dans les captures ni les enregistrer dans Git.
 
 ## 3. Installer Argo CD
 
