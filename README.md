@@ -220,7 +220,7 @@ Depuis l'accueil Jenkins :
 4. Indiquer la branche `*/main` et le chemin `Jenkinsfile`.
 5. Enregistrer, puis lancer un premier build.
 
-Le Jenkinsfile demande le label `local` et prévoit les étapes Checkout, Build, Tag et Push. Il vérifie le dépôt périodiquement avec `pollSCM` toutes les cinq minutes environ. Chaque build utilise `build-<numéro>` et `latest` pour les trois images. Il ne modifie pas automatiquement les tags des manifests Kubernetes.
+Le Jenkinsfile demande le label `local` et prévoit les étapes Checkout, Build, Tag et Push. Il vérifie le dépôt périodiquement avec `pollSCM` toutes les cinq minutes environ. Chaque build utilise `build-<numéro>` et `git-<commit>` pour les trois images. Il ne modifie pas automatiquement les tags des manifests Kubernetes.
 
 Vérifier que les quatre étapes réussissent et que les trois dépôts publics Docker Hub affichent les nouveaux tags. Les manifests Kubernetes doivent utiliser un tag explicite, pas `latest`. Un build complet a été validé sur notre installation avec l’agent local.
 

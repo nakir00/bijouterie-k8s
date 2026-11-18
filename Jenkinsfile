@@ -3,7 +3,7 @@ pipeline {
     agent { label 'local' }
 
     options {
-        // Empêche deux builds de se concurrencer sur le tag latest.
+        // Évite que deux builds concurrents ne réutilisent les mêmes tags locaux.
         disableConcurrentBuilds()
         // Le stage Checkout ci-dessous gère explicitement la récupération du code.
         skipDefaultCheckout()
@@ -25,6 +25,10 @@ pipeline {
             steps {
                 // Utilise le dépôt et le credential SCM configurés dans le job.
                 checkout scm
+                // Identifie le commit effectivement construit.
+                script {
+                    env.COMMIT_TAG = "git-${sh(script: 'git rev-parse --short=12 HEAD', returnStdout: true).trim()}"
+                }
             }
         }
 
@@ -41,11 +45,11 @@ pipeline {
 
         stage('Tag') {
             steps {
-                // Chaque image reçoit le numéro du build et le tag latest.
+                // Chaque image reçoit le numéro du build et le commit Git.
                 sh '''
                     for service in frontend backend mysql; do
                         docker tag "bijouterie-${service}:ci" "${DOCKERHUB_NAMESPACE}/bijouterie-${service}:${IMAGE_TAG}"
-                        docker tag "bijouterie-${service}:ci" "${DOCKERHUB_NAMESPACE}/bijouterie-${service}:latest"
+                        docker tag "bijouterie-${service}:ci" "${DOCKERHUB_NAMESPACE}/bijouterie-${service}:${COMMIT_TAG}"
                     done
                 '''
             }
@@ -63,7 +67,7 @@ pipeline {
                         printf '%s' "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USER" --password-stdin
                         for service in frontend backend mysql; do
                             docker push "${DOCKERHUB_NAMESPACE}/bijouterie-${service}:${IMAGE_TAG}"
-                            docker push "${DOCKERHUB_NAMESPACE}/bijouterie-${service}:latest"
+                            docker push "${DOCKERHUB_NAMESPACE}/bijouterie-${service}:${COMMIT_TAG}"
                         done
                     '''
                 }
